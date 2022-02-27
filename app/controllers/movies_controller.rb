@@ -9,8 +9,28 @@ class MoviesController < ApplicationController
     def index
       @all_ratings = Movie.ratings
       @sort = params[:sort]
-      @rat = params[:ratings].nil? ? @all_ratings : params[:ratings].keys
-      @movies = Movie.where(rating: @rat).order(@sort)
+
+      unless session.key?(:ratings)
+        session[:ratings] = @all_ratings
+      end
+      unless session.key?(:sort)
+        session[:sort] = ''
+      end
+      
+      if params.key?(:ratings)
+        session[:ratings] = params[:ratings].keys
+      end
+      if params.key?(:sort)
+        session[:sort] = params[:sort]
+      end
+      
+      @movies = Movie.where(rating: session[:ratings])
+      @ratings = session[:ratings]
+      
+      if !session[:sort].nil?
+        @movies = @movies.order(session[:sort])
+      end
+
     end
   
     def new
