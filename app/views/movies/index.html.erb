@@ -3,12 +3,15 @@
 
 <%#  Part 2: Start here... %>
 
+<% titleClass = @sort=="title" ? "hilite text-dark" : "" %>
+<% releaseClass = @sort=="release_date" ? "hilite text-dark" : "" %>
+
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th class="<%= titleClass %>"><%= link_to 'Movie Title', movies_path(sort: "title", id: "title_header") %></th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th class="<%= releaseClass %>"><%= link_to 'Release Date', movies_path(sort: "release_date", id: "release_date_header") %></th>
       <th>More Info</th>
     </tr>
   </thead>
@@ -32,3 +35,4 @@
   </tbody>
 </table>
 <%= link_to 'Add new movie', new_movie_path, :class => 'btn btn-primary' %>
+
