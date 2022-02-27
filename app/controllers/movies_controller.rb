@@ -7,10 +7,10 @@ class MoviesController < ApplicationController
     end
   
     def index
+      @all_ratings = Movie.ratings
       @sort = params[:sort]
-      puts "Sort value:"
-      puts @sort
-      @movies = Movie.all.order(@sort)
+      @rat = params[:ratings].nil? ? @all_ratings : params[:ratings].keys
+      @movies = Movie.where(rating: @rat).order(@sort)
     end
   
     def new

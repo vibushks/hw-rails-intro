@@ -6,6 +6,15 @@
 <% titleClass = @sort=="title" ? "hilite text-dark" : "" %>
 <% releaseClass = @sort=="release_date" ? "hilite text-dark" : "" %>
 
+<%= form_tag movies_path, id:"ratings_form", :method => :get do %>
+  <% @all_ratings.each do |rating| %>
+    <%= rating %>
+    <%= check_box_tag "ratings[#{rating}]", id="ratings_#{rating}", checked=(@rat.include? rating) %>
+  <% end %>
+  <%= submit_tag 'Refresh', :class => 'btn btn-primary', id:"ratings_submit" %>
+  
+<% end %>
+
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
